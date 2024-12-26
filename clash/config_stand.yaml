@@ -9,15 +9,15 @@ p: &p {type: http, interval: 86400, health-check: {enable: true, url: "https://w
 proxies:
 - name: "JP_BWG_Hy2"
   type: hysteria2
-  server: bwgjp.mornshiner.top
-  port: 443
-  password: 123456
+  server: 
+  port: 
+  password: 
   alpn:
   - h3
   protocol: udp
   up: 60 Mbps
   down: 500 Mbps
-  sni: bwgjp.mornshiner.top
+  sni: 
   skip-cert-verify: false
 proxies:
 - name: "直连"
@@ -28,7 +28,7 @@ proxies:
 proxy-providers:
   cherry:
     <<: *p
-    url: "https://cherry.azureedge.net/sub?target=clash&filename=CherryLink&url=https://cherryvpn.net/link/q1btTnV38Nx8CLZg?sub=2"
+    url: ""
    
 ##开始为不同分流策略定义相应的代理节点组（代理组）
 ##&用来定义锚点， *用来引用，比如下面的&pr和*pr，跟宏的作用差不多
