@@ -5,40 +5,31 @@ pr: &pr {type: select, proxies: [默认, 香港, 香港自动选择, 台湾, 台
 p: &p {type: http, interval: 3600, health-check: {enable: true, url: "https://www.gstatic.com/generate_204", interval: 300}}
 ######### 锚点 end #######
 
-# url 里填写自己的订阅,名称不能重复
-proxy-providers:
-  provider1:
-    <<: *p
-    url: ""
-  provider2:
-    <<: *p
-    url: ""
-ipv6: true
-allow-lan: true
-mixed-port: 7890
-external-controller: 127.0.0.1:9090
-profile:
-  store-selected: true
-  store-fake-ip: true
-dns:
-  enable: true
-  ipv6: true
-  enhanced-mode: fake-ip
-  fake-ip-range: 28.0.0.1/8
-  fake-ip-filter:
-    - "*"
-    - "+.lan"
-    - "+.local"
-  default-nameserver:
-    - 223.5.5.5
-  nameserver:
-    - https://doh.pub/dns-query
-    - https://dns.alidns.com/dns-query
+proxies:
+- name: 
+  type: hysteria2
+  server: 
+  port: 
+  password: 
+  alpn:
+  - h3
+  protocol: udp
+  up: 60 Mbps
+  down: 500 Mbps
+  sni: 
+  skip-cert-verify: false
 
 proxies:
 - name: "直连"
   type: direct
   udp: true
+
+# url 里填写自己的订阅,名称不能重复
+proxy-providers:
+  cherry:
+    <<: *p
+    url: ""
+
 proxy-groups:
 - {name: 默认, type: select, proxies: [自动选择, 直连, 香港, 香港自动选择, 台湾, 台湾自动选择, 日本, 日本自动选择, 新加坡, 新加坡自动选择, 美国, 美国自动选择, 其它地区, 全部节点], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Proxy.png"}
 - {name: Google, <<: *pr, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Google_Search.png"}
@@ -55,11 +46,7 @@ proxy-groups:
 - {name: 国内, type: select, proxies: [直连, 默认, 香港, 香港自动选择, 台湾, 台湾自动选择, 日本, 日本自动选择, 新加坡, 新加坡自动选择, 美国, 美国自动选择, 其它地区, 全部节点, 自动选择], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/China_Map.png"}
 - {name: 其他, <<: *pr, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Final.png"}
   #分隔,下面是地区分组
-- {name: 香港, type: select, include-all: true, filter: "(?i)港|hk|hongkong|hong kong", icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/HK.png"}
-- {name: 台湾, type: select, include-all: true, filter: "(?i)台|tw|taiwan", icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/TW.png"}
-- {name: 日本, type: select, include-all: true, filter: "(?i)日|jp|japan", icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/JP.png"}
-- {name: 美国, type: select, include-all: true, filter: "(?i)美|us|unitedstates|united states", icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/US.png"}
-- {name: 新加坡, type: select, include-all: true, filter: "(?i)(新|sg|singapore)", icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/SG.png"}
+
 - {name: 其它地区, type: select, include-all: true, filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*", icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Available.png"}
 - {name: 自动选择, type: url-test, include-all: true, tolerance: 10, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Auto.png"}
 - {name: 全部节点, type: select, include-all: true, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Global.png"}
